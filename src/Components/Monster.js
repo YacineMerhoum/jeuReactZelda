@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import ProgressBar from './ProgressBar';
 import MonsterIcon from "../Icons/ganondorf.png"
 import { useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 const Monster = () => {
   const monster = useSelector(state => state.fight.monster)
+  const imageGanon = useRef(null)
 
   return (
     <section>
@@ -18,7 +19,7 @@ const Monster = () => {
             <div className="row">
               <div className="col-sm-2 offset-sm-3">
                 <span className="badge badge-danger ml-2" id="degatSpanMonster"></span>
-                <img className="img-fluid" src={MonsterIcon} alt='monster' />
+                <img className="img-fluid" src={MonsterIcon} ref={imageGanon} alt='monster' />
               </div>
               <div id="comboOnMonster" className="col-sm-6"></div>
             </div>
@@ -26,7 +27,7 @@ const Monster = () => {
           <h1 className="ganondorf">{monster.name}</h1>
           <p className='description'>{monster.description}</p>
           <div className='mb-10'>
-            <ProgressBar pv={monster.pv} pvMax={monster.pvMax} bgType='bg-danger' faType='fa-heart' barName=' : pv' />
+            <ProgressBar pv={monster.pv} imageGanon={imageGanon} pvMax={monster.pvMax} bgType='bg-danger' faType='fa-heart' barName=' : pv' />
           </div>
         </div>
       </div>
