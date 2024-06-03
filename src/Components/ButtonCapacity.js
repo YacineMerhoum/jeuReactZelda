@@ -20,7 +20,7 @@ const ButtonCapacity = ({ player, imageRef , monsterImageRef  }) => {
         imageRef.current.classList.add('playerSuperAttack');
         setTimeout(() => {
             // Le temps de l'attaque une fois lancé 
-            dispatch(superhit(100));
+            dispatch(superhit(250));
             console.log("La super attaque à frappée !");
             dispatch(manaSuperHit({
                 playerId: player,
