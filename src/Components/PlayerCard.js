@@ -4,7 +4,7 @@ import ProgressBar from './ProgressBar';
 
 const PlayerCard = ({ player }) => {
   const imageRef = useRef(null);
-
+  console.log('playercard ref', imageRef);
   return (
     <div key={player.id} className="col-sm-3 card center" id={`joueur${player.id}`}>
       <div className="card-body text-center">

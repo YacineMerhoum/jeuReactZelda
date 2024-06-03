@@ -4,6 +4,7 @@ import ImgRevali from "../../Icons/revali.png";
 import ImgMipha from "../../Icons/MIpha.png";
 import ImgRiju from "../../Icons/riju.png";
 
+
 const initialState = {
   players: [
     { name: "Link", pv: 100, pvMax: 100, mana: 30, manaMax: 30, id: 1, image: ImgLink },
@@ -27,6 +28,7 @@ export const fightSlice = createSlice({
       const damage = action.payload;
       state.monster.pv -= damage;
     },
+    
     hitBack: (state, action) => {
       const { playerId, attack } = action.payload;
       state.players = state.players.map(player => {
@@ -48,10 +50,12 @@ export const fightSlice = createSlice({
         }
         return player;
       });
-    }
+    },
+  
   }
+
 
 });
 
-export const { hitMonster, hitBack, superhit , manaSuperHit } = fightSlice.actions;
+export const { hitMonster , hitBack, superhit , manaSuperHit } = fightSlice.actions;
 export default fightSlice.reducer;

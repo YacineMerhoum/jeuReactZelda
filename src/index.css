@@ -205,3 +205,43 @@ code {
 	}
   }
   
+.heroesDefait {
+	animation: defait 2s ease 0s 1 normal forwards;
+}
+@keyframes defait {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(0.6);
+	}
+}
+
+
+/* PORGRESS BAR TEST
+ */
+ 
+
+ .animationDamage2 {
+  
+	animation:  Ganon 0.5s ease 0s 1 normal forwards;
+	transition: 1.4s;
+	
+  }
+  @keyframes Ganon {
+	0%,
+	50%,
+	100% {
+		opacity: 1;
+	}
+
+	25%,
+	75% {
+		opacity: 0;
+	}
+}
+ 
+  

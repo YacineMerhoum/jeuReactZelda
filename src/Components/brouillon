@@ -1,55 +1,66 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hitBack, hitMonster, superhit, manaSuperHit } from '../features/fight/fightSlice';
-import { current } from '@reduxjs/toolkit';
 
-const ButtonCapacity = ({ player, imageRef , monsterImageRef  }) => {
+const ButtonCapacity = ({ player }) => {
+    const itemsRef = useRef([]);
+    const items = ["imageRef", "monsterImageRef"];
+
+    useEffect(() => {
+        itemsRef.current = itemsRef.current.slice(0, items.length);
+    }, [items.length]);
+
     const [pv, setPv] = useState(100);
     const [isSuperButtonVisible, setIsSuperButtonVisible] = useState(true);
     const dispatch = useDispatch();
     const superButtonRef = useRef(null);
 
-
-    const heroesDefait = () => {
-        imageRef.current.classList.add('heroesDefait')
-    }
-
     const superAttaque = () => {
         setIsSuperButtonVisible(false);
 
-        imageRef.current.classList.add('playerSuperAttack');
-        setTimeout(() => {
-            // Le temps de l'attaque une fois lancé 
-            dispatch(superhit(100));
-            console.log("La super attaque à frappée !");
-            dispatch(manaSuperHit({
-                playerId: player,
-                attack: 10
-            }));
-            console.log("La mana descend suite à l'attaque");
-        }, 2000);
-        setTimeout(() => {
-            imageRef.current.classList.remove('playerSuperAttack');
-        }, 2500);
+        const item0 = itemsRef.current[0];
+        if (item0) {
+            item0.classList.add('playerSuperAttack');
+            setTimeout(() => {
+                // Le temps de l'attaque une fois lancée
+                dispatch(superhit(100));
+                console.log("La super attaque a frappé !");
+                dispatch(manaSuperHit({
+                    playerId: player,
+                    attack: 10
+                }));
+                console.log("La mana descend suite à l'attaque");
+            }, 2000);
+            setTimeout(() => {
+                item0.classList.remove('playerSuperAttack');
+            }, 2500);
+        }
     };
 
     const combat = () => {
         setTimeout(() => {
             if (superButtonRef.current) {
                 superButtonRef.current.classList.add("superAttaqueAnim");
-                console.log("la super attaque est prête");
+                console.log("La super attaque est prête");
             }
         }, 5000);
 
         dispatch(hitMonster(4));
-        
         console.log("Le user attaque !");
-        
+
         const timeout = 1500;
-        
+        const item1 = itemsRef.current[1];
+        const item0 = itemsRef.current[0];
+
         setTimeout(() => {
-            if (imageRef.current) {
-                imageRef.current.classList.add('animationDamage');
+            if (item1) {
+                item1.classList.add('animationDamage');
+            }
+        }, 1000);
+
+        setTimeout(() => {
+            if (item0) {
+                item0.classList.add('animationDamage');
             }
             dispatch(hitBack({
                 playerId: player,
@@ -64,10 +75,8 @@ const ButtonCapacity = ({ player, imageRef , monsterImageRef  }) => {
             console.log('Le méchant riposte !');
 
             setTimeout(() => {
-            
-                if (imageRef.current) {
-                    imageRef.current.classList.remove('animationDamage');
-                    
+                if (item0) {
+                    item0.classList.remove('animationDamage');
                 }
             }, 1000);
         }, timeout);
@@ -75,8 +84,7 @@ const ButtonCapacity = ({ player, imageRef , monsterImageRef  }) => {
 
     return (
         <div className='boxButton'>
-            {pv > 0  ?  (
-
+            {pv > 0 ? (
                 <div className="flex space-x-4">
                     <button
                         type="button"
@@ -99,9 +107,8 @@ const ButtonCapacity = ({ player, imageRef , monsterImageRef  }) => {
                     )}
                 </div>
             ) : (
-                <p ref={heroesDefait} className='text-white defaitPlayer mb-5 ms-16'>{player.name} Le joueur a perdu !</p>
-                
-            )}  
+                <p className='text-white defaitPlayer mb-5'>{player.name} Le joueur a perdu !</p>
+            )}
         </div>
     );
 };
