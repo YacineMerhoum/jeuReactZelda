@@ -1,7 +1,6 @@
 import React from 'react';
 import './Game.css';
 import Monster from './Monster';
-
 import PlayerList from './PlayerList';
 import Opening from './Opening';
 
