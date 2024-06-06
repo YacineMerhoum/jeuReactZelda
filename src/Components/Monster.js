@@ -86,8 +86,8 @@ const Monster = () => {
         
         </div>
       )}
-    </section>
-  );
+      </section>
+    );
 };
 
 export default Monster;

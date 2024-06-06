@@ -7,20 +7,20 @@ import {
   manaSuperHit,
   addIdIsPlayerAttacking,
   removetour,
-  healPlayer
+  healPlayer,
 } from "../features/fight/fightSlice";
 import { current } from "@reduxjs/toolkit";
 
-const ButtonCapacity = ({ player, imageRef }) => {
+const ButtonCapacity = ({ player, imageRef, name }) => {
   const [pv, setPv] = useState(100);
 
   const [isSuperButtonVisible, setIsSuperButtonVisible] = useState(true);
   const dispatch = useDispatch();
   const superButtonRef = useRef(null);
-  const [showHealText, setShowHealText] = useState(false)
-  const [showPvText , setShowPvText] = useState(false)
-  const [niceHit , setNiceHit] = useState(false)
-  const [superAtkReady, setSuperAtkReady] = useState(false)
+  const [showHealText, setShowHealText] = useState(false);
+  const [showPvText, setShowPvText] = useState(false);
+  const [niceHit, setNiceHit] = useState(false);
+  const [superAtkReady, setSuperAtkReady] = useState(false);
 
   const state = useSelector((state) => state.fight);
 
@@ -49,34 +49,41 @@ const ButtonCapacity = ({ player, imageRef }) => {
     imageRef.current.classList.add("heroesDefait");
   };
 
-
   const HandlePotionUp = () => {
     imageRef.current.classList.add("soin");
-    setShowHealText(true)
-    dispatch(healPlayer({playerId: player, soin: 25}));
+    setShowHealText(true);
+    dispatch(healPlayer({ playerId: player, soin: 25 }));
     console.log(healPlayer, "Potion activée !");
     setTimeout(() => {
       imageRef.current.classList.remove("soin");
     }, 3000);
     setTimeout(() => {
-    setShowHealText(false)
+      setShowHealText(false);
     }, 1500);
   };
 
   const superAttaque = () => {
     setIsSuperButtonVisible(false);
-    
 
     imageRef.current.classList.add("playerSuperAttack");
+    document.getElementById("root").classList.add("bg-black");
+
     setTimeout(() => {
       // Le temps de l'attaque une fois lancé
-      dispatch(superhit(250));
 
-      setNiceHit(true)
+      setNiceHit(true);
       setTimeout(() => {
         setNiceHit(false);
       }, 1500);
       console.log("La super attaque à frappée !");
+      setTimeout(() => {
+        document.getElementById("root").classList.add("bg-red");
+      }, 50);
+      const superHitAleatoire = [ 50,60,70,80,90,100,110,120,130,140,150,200 ]
+      const getRandomHitSp = () => {
+        const randomIndex = Math.floor(Math.random() * superHitAleatoire.length);
+        return superHitAleatoire[randomIndex] }
+      dispatch(superhit(getRandomHitSp()));
       dispatch(
         manaSuperHit({
           playerId: player,
@@ -87,6 +94,8 @@ const ButtonCapacity = ({ player, imageRef }) => {
     }, 2000);
     setTimeout(() => {
       imageRef.current.classList.remove("playerSuperAttack");
+      document.getElementById("root").classList.remove("bg-red");
+      document.getElementById("root").classList.remove("bg-black");
     }, 2500);
   };
 
@@ -98,12 +107,11 @@ const ButtonCapacity = ({ player, imageRef }) => {
         if (superButtonRef.current) {
           superButtonRef.current.classList.add("superAttaqueAnim");
           console.log("la super attaque est prête");
-          setSuperAtkReady(true)
+          setSuperAtkReady(true);
         }
       }, 5000);
 
-      dispatch(hitMonster(5));
-      
+      dispatch(hitMonster(15));
 
       console.log("Le user attaque !");
 
@@ -116,13 +124,13 @@ const ButtonCapacity = ({ player, imageRef }) => {
         dispatch(
           hitBack({
             playerId: player,
-            attack: 50,
+            attack: 45,
           })
         );
-        setShowPvText(true)
-      setTimeout(() => {
-        setShowPvText(false)
-      }, 2500);
+        setShowPvText(true);
+        setTimeout(() => {
+          setShowPvText(false);
+        }, 2500);
 
         setPv((prevPv) => {
           const newPv = prevPv - 15;
@@ -137,25 +145,32 @@ const ButtonCapacity = ({ player, imageRef }) => {
           }
         }, 1000);
       }, timeout);
-      console.log(pvs, " aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      console.log(pvs, " aaaaaaaaaaaa");
       dispatch(addIdIsPlayerAttacking({ playerId: player }));
     }
+  };
+  
+  const arraySentence = ["COUP CRITIQUE", "TU L'AS DEBOITE !", "BIEN JOUE MEC" , "SUPER EFFICACE !" ,
+ , "COUP CRITIQUE" ];
+  const getRandomSentence = () => {
+    const randomIndex = Math.floor(Math.random() * arraySentence.length);
+    return arraySentence[randomIndex];
   };
 
   return (
     <div className="boxButton">
-            {superAtkReady && (
+      {superAtkReady && (
         <div className="move-text">
-          LA SUPER ATTAQUE EST PRÊTE !
-        </div>)}
-            {niceHit && (
-        <div className="critical-hit-text">
-          COUP CRITIQUE
+          La super attaque de <span className="spanName">{name}</span> est PRÊTE
+          !
         </div>
+      )}
+      {niceHit && (
+        <div className="critical-hit-text">{getRandomSentence()}</div>
       )}
       {pvs > 0 ? (
         <div>
-          <div className="flex space-x-4 justify-center mb-5">
+          <div className="flex space-x-4 justify-center ms-5 mb-5">
             <button
               type="button"
               title="Attaque simple qui inflige 5 de dégât au monstre"
@@ -166,11 +181,7 @@ const ButtonCapacity = ({ player, imageRef }) => {
               <i className="fas fa-bomb"></i>
               <i className="fas fa-fire-alt"></i>
             </button>
-            {showPvText && (
-              <div className="pv-text">
-                -45
-                </div>
-            )}
+            {showPvText && <div className="pv-text">-45</div>}
             <button
               type="button"
               title="Potion qui recharge les pv de votre héro de 25pv"
@@ -181,15 +192,10 @@ const ButtonCapacity = ({ player, imageRef }) => {
               <i className="fas fa-flask"></i>
               <i className="fas fa-magic"></i>
             </button>
-            {showHealText && (
-        <div className="heal-text">
-          +25
-        </div>
-      )}
+            {showHealText && <div className="heal-text">+25</div>}
           </div>
           {isSuperButtonVisible && (
             <div className="flex justify-center">
-
               <button
                 className="w-40 buttonNone mb-5 bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-75"
                 type="button"

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 const PlayerList = () => {
   const players = useSelector(state => state.fight.players);
+  
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>

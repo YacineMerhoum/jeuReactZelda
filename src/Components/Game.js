@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './Game.css';
 import Monster from './Monster';
 import PlayerList from './PlayerList';
 import Opening from './Opening';
 
+const App = () => {
 
-const App = () => (
+  
+return  (
         <>
         
         <div className="App">
@@ -14,11 +16,10 @@ const App = () => (
         <Opening />
         <section className="container-fluid">
           <PlayerList />
-          
         </section >
         </div>
         </>
  )
   
-
+}
 export default App;
