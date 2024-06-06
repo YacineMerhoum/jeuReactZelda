@@ -48,7 +48,7 @@ const Monster = () => {
         <div className="container">
           <div className="row">
             <div className="card-monstre col-sm-12">
-              <div id="monsterCard" className="text-center">
+              <div id="monsterCard" className="text-center ms-5">
                 <div className="flex justify-center">
                   <div className="row">
                     <div className="col-sm-2 offset-sm-3">
