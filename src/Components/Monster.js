@@ -71,7 +71,7 @@ const Monster = () => {
                 <h1 className="ganondorf">{monster.name}</h1>
                
                 <p className="description">{monster.description}</p>
-                <div className="mb-10">
+                <div className="mb-14">
                   <ProgressBar
                     pv={monster.pv}
                     pvMax={monster.pvMax}

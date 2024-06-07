@@ -356,6 +356,18 @@ code {
 	transition: 0.4s;
 	
   }
+  .astuceText {
+	animation: apparationLogo  2s ease 0s 1 normal forwards ;
+	position: relative;
+	color: white;
+	font-weight: bold;
+	z-index: 2;
+	font-size: 20px;
+	height: auto;
+	transition: 2s;
+	display: block;
+	
+  }
  
   @keyframes apparationLogo {
 	0% {
@@ -390,7 +402,7 @@ code {
   }
   .startButtonDisplay {
 	display: block;
-	margin-left: 39%;
+	
 	justify-content: center;
 	position: relative;
 	z-index: 2;
@@ -644,5 +656,13 @@ code {
 
   .bg-red {
 	background-color: rgba(255, 0, 0, 0.693);
+
+  }
+  .testcard {
+	border: 4px rgba(232, 31, 31, 0.575);
+	border-style: inset;
+	border-radius: 10%;
+	background-color: rgba(128, 128, 128, 0.153);
+	
 
   }

@@ -383,7 +383,9 @@ animation: AnimationHeal 1s ease 1;
 
 
 .card-monstre {
-margin-top: 10px;
+margin-top: 5px;
+margin-left: 50px;
+margin-right: 50px;
 }
 
 /*#### Bouton COMBO ####*/
