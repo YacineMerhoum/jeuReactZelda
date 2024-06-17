@@ -441,6 +441,23 @@ code {
 .divHeros {
 	margin-top: -50px;
 }
+@media  (max-width: 700px ){
+	.divHeros {
+		margin-top: 10px;
+	}
+	.move-text {
+		position: fixed;
+		top: 1%;
+		left: 0%;
+		font-size: 0.2rem;
+		color: rgb(34, 108, 235);
+		font-weight: bold;
+		font-style: italic;
+		z-index: 9999;
+		animation: moveLeftToRight 3.5s linear forwards;
+		text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.809), 4px 4px 20px rgba(255, 255, 255, 0.933);
+	  }
+}
 
 .bgMonsterProgress {
 	background-color: #f90a0ace;
